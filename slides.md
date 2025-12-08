@@ -1,617 +1,747 @@
 ---
-# try also 'default' to start simple
-theme: default
-# random image from a curated Unsplash collection by Anthony
-# like them? see https://unsplash.com/collections/94734566/slidev
+theme: seriph
 background: ./images/background.png
-# some information about your slides (markdown enabled)
 title: Como evitar que el LLM se vaya a la banquina
-# apply UnoCSS classes to the current slide
 class: text-center
-# https://sli.dev/features/drawing
 drawings:
   persist: false
-# slide transition: https://sli.dev/guide/animations.html#slide-transitions
 transition: slide-left
-# enable MDC Syntax: https://sli.dev/features/mdc
 mdc: true
-# duration of the presentation
-duration: 35min
+duration: 20min
 ---
 
-# Como evitar que el LLM se vaya a la banquina
-
-<!--
-The last comment block of each slide will be treated as slide notes. It will be visible and editable in Presenter Mode along with the slide. [Read more in the docs](https://sli.dev/guide/syntax.html#notes)
--->
-
----
-transition: fade-out
----
-
-# What is Slidev?
-
-Slidev is a slides maker and presenter designed for developers, consist of the following features
-
-- 📝 **Text-based** - focus on the content with Markdown, and then style them later
-- 🎨 **Themable** - themes can be shared and re-used as npm packages
-- 🧑‍💻 **Developer Friendly** - code highlighting, live coding with autocompletion
-- 🤹 **Interactive** - embed Vue components to enhance your expressions
-- 🎥 **Recording** - built-in recording and camera view
-- 📤 **Portable** - export to PDF, PPTX, PNGs, or even a hostable SPA
-- 🛠 **Hackable** - virtually anything that's possible on a webpage is possible in Slidev
-<br>
-<br>
-
-Read more about [Why Slidev?](https://sli.dev/guide/why)
-
-<!--
-You can have `style` tag in markdown to override the style for the current page.
-Learn more: https://sli.dev/features/slide-scope-style
--->
-
-<style>
-h1 {
-  background-color: #2B90B6;
-  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-}
-</style>
-
-<!--
-Here is another comment.
--->
-
----
-transition: slide-up
-level: 2
----
-
-# Navigation
-
-Hover on the bottom-left corner to see the navigation's controls panel, [learn more](https://sli.dev/guide/ui#navigation-bar)
-
-## Keyboard Shortcuts
-
-|                                                     |                             |
-| --------------------------------------------------- | --------------------------- |
-| <kbd>right</kbd> / <kbd>space</kbd>                 | next animation or slide     |
-| <kbd>left</kbd>  / <kbd>shift</kbd><kbd>space</kbd> | previous animation or slide |
-| <kbd>up</kbd>                                       | previous slide              |
-| <kbd>down</kbd>                                     | next slide                  |
-
-<!-- https://sli.dev/guide/animations.html#click-animation -->
-<img
-  v-click
-  class="absolute -bottom-9 -left-7 w-80 opacity-50"
-  src="https://sli.dev/assets/arrow-bottom-left.svg"
-  alt=""
-/>
-<p v-after class="absolute bottom-23 left-45 opacity-30 transform -rotate-10">Here!</p>
-
----
-layout: two-cols
-layoutClass: gap-16
----
-
-# Table of contents
-
-You can use the `Toc` component to generate a table of contents for your slides:
-
-```html
-<Toc minDepth="1" maxDepth="1" />
-```
-
-The title will be inferred from your slide content, or you can override it with `title` and `level` in your frontmatter.
-
-::right::
-
-<Toc text-sm minDepth="1" maxDepth="2" />
-
----
-layout: image-right
-image: https://cover.sli.dev
----
-
-# Code
-
-Use code snippets and get the highlighting directly, and even types hover!
-
-```ts [filename-example.ts] {all|4|6|6-7|9|all} twoslash
-// TwoSlash enables TypeScript hover information
-// and errors in markdown code blocks
-// More at https://shiki.style/packages/twoslash
-import { computed, ref } from 'vue'
-
-const count = ref(0)
-const doubled = computed(() => count.value * 2)
-
-doubled.value = 2
-```
-
-<arrow v-click="[4, 5]" x1="350" y1="310" x2="195" y2="342" color="#953" width="2" arrowSize="1" />
-
-<!-- This allow you to embed external code blocks -->
-<<< @/snippets/external.ts#snippet
-
-<!-- Footer -->
-
-[Learn more](https://sli.dev/features/line-highlighting)
-
-<!-- Inline style -->
-<style>
-.footnotes-sep {
-  @apply mt-5 opacity-10;
-}
-.footnotes {
-  @apply text-sm opacity-75;
-}
-.footnote-backref {
-  display: none;
-}
-</style>
-
-<!--
-Notes can also sync with clicks
-
-[click] This will be highlighted after the first click
-
-[click] Highlighted with `count = ref(0)`
-
-[click:3] Last click (skip two clicks)
--->
-
----
-level: 2
----
-
-# Shiki Magic Move
-
-Powered by [shiki-magic-move](https://shiki-magic-move.netlify.app/), Slidev supports animations across multiple code snippets.
-
-Add multiple code blocks and wrap them with <code>````md magic-move</code> (four backticks) to enable the magic move. For example:
-
-````md magic-move {lines: true}
-```ts {*|2|*}
-// step 1
-const author = reactive({
-  name: 'John Doe',
-  books: [
-    'Vue 2 - Advanced Guide',
-    'Vue 3 - Basic Guide',
-    'Vue 4 - The Mystery'
-  ]
-})
-```
-
-```ts {*|1-2|3-4|3-4,8}
-// step 2
-export default {
-  data() {
-    return {
-      author: {
-        name: 'John Doe',
-        books: [
-          'Vue 2 - Advanced Guide',
-          'Vue 3 - Basic Guide',
-          'Vue 4 - The Mystery'
-        ]
-      }
-    }
-  }
-}
-```
-
-```ts
-// step 3
-export default {
-  data: () => ({
-    author: {
-      name: 'John Doe',
-      books: [
-        'Vue 2 - Advanced Guide',
-        'Vue 3 - Basic Guide',
-        'Vue 4 - The Mystery'
-      ]
-    }
-  })
-}
-```
-
-Non-code blocks are ignored.
-
-```vue
-<!-- step 4 -->
-<script setup>
-const author = {
-  name: 'John Doe',
-  books: [
-    'Vue 2 - Advanced Guide',
-    'Vue 3 - Basic Guide',
-    'Vue 4 - The Mystery'
-  ]
-}
-</script>
-```
-````
+## Como evitar que el LLM se vaya a la banquina
 
 ---
 
-# Components
+# El Problema con los LLM
 
-<div grid="~ cols-2 gap-4">
-<div>
-
-You can use Vue components directly inside your slides.
-
-We have provided a few built-in components like `<Tweet/>` and `<Youtube/>` that you can use directly. And adding your custom components is also super easy.
-
-```html
-<Counter :count="10" />
-```
-
-<!-- ./components/Counter.vue -->
-<Counter :count="10" m="t-4" />
-
-Check out [the guides](https://sli.dev/builtin/components.html) for more.
-
-</div>
-<div>
-
-```html
-<Tweet id="1390115482657726468" />
-```
-
-<Tweet id="1390115482657726468" scale="0.65" />
-
-</div>
-</div>
-
-<!--
-Presenter note with **bold**, *italic*, and ~~striked~~ text.
-
-Also, HTML elements are valid:
-<div class="flex w-full">
-  <span style="flex-grow: 1;">Left content</span>
-  <span>Right content</span>
-</div>
--->
-
----
-class: px-20
----
-
-# Themes
-
-Slidev comes with powerful theming support. Themes can provide styles, layouts, components, or even configurations for tools. Switching between themes by just **one edit** in your frontmatter:
-
-<div grid="~ cols-2 gap-2" m="t-2">
-
-```yaml
----
-theme: default
----
-```
-
-```yaml
----
-theme: seriph
----
-```
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-default/01.png?raw=true" alt="">
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-seriph/01.png?raw=true" alt="">
-
-</div>
-
-Read more about [How to use a theme](https://sli.dev/guide/theme-addon#use-theme) and
-check out the [Awesome Themes Gallery](https://sli.dev/resources/theme-gallery).
-
----
-
-# Clicks Animations
-
-You can add `v-click` to elements to add a click animation.
-
-<div v-click>
-
-This shows up when you click the slide:
-
-```html
-<div v-click>This shows up when you click the slide.</div>
-```
-
-</div>
-
-<br>
+<div class="grid gap-8">
 
 <v-click>
 
-The <span v-mark.red="3"><code>v-mark</code> directive</span>
-also allows you to add
-<span v-mark.circle.orange="4">inline marks</span>
-, powered by [Rough Notation](https://roughnotation.com/):
+### Modelos estadísticos, no determinísticos
 
-```html
-<span v-mark.underline.orange>inline markers</span>
+```python
+prompt = "Suma 2 + 2"
+
+response_1 = llm(prompt) # "4"
+response_2 = llm(prompt) # "2 + 2 = 4"
+response_3 = llm(prompt) # "La suma es cuatro"
 ```
+</v-click>
+<v-click>
+
+### Pueden generar información que no es correcta
+- Información desactualizada
+- Responder a preguntas que no queremos
 
 </v-click>
+</div>
 
-<div mt-20 v-click>
+---
+layout: image-right
+image: ./images/hallucination_meme.png
+backgroundSize: 20em 70%
+---
 
-[Learn more](https://sli.dev/guide/animations#click-animation)
+# Hallucinations
+
+Cuando el modelo genera contenido que:
+- No es factualmente correcto
+- Inventa referencias o datos
+- Contradice la información proporcionada
+- Parece confiable pero es falso
+
+<div class="mt-6">
+
+Inherente a la arquitectura de los LLMs
 
 </div>
 
 ---
 
-# Motions
+# Tasas de Alucinación
+Benchmarks según Vectara Hallucination Leaderboard (Diciembre 2025) - Metodología HHEM-2.3
 
-Motion animations are powered by [@vueuse/motion](https://motion.vueuse.org/), triggered by `v-motion` directive.
+<div style="font-size: 9px; margin-top: 20px;">
 
-```html
-<div
-  v-motion
-  :initial="{ x: -80 }"
-  :enter="{ x: 0 }"
-  :click-3="{ x: 80 }"
-  :leave="{ x: 1000 }"
->
-  Slidev
-</div>
-```
-
-<div class="w-60 relative">
-  <div class="relative w-40 h-40">
-    <img
-      v-motion
-      :initial="{ x: 800, y: -100, scale: 1.5, rotate: -50 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-square.png"
-      alt=""
-    />
-    <img
-      v-motion
-      :initial="{ y: 500, x: -100, scale: 2 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-circle.png"
-      alt=""
-    />
-    <img
-      v-motion
-      :initial="{ x: 600, y: 400, scale: 2, rotate: 100 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-triangle.png"
-      alt=""
-    />
-  </div>
-
-  <div
-    class="text-5xl absolute top-14 left-40 text-[#2B90B6] -z-1"
-    v-motion
-    :initial="{ x: -80, opacity: 0}"
-    :enter="{ x: 0, opacity: 1, transition: { delay: 2000, duration: 1000 } }">
-    Slidev
+<div style="display: flex; align-items: center; margin-bottom: 6px;">
+  <div style="width: 150px;" class="text-sm">Gemini-2.5-Flash-Lite</div>
+  <div style="flex: 1; background: #e0e0e0; height: 20px; border-radius: 2px;">
+    <div style="width: 25.4%; background: #4caf50; height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: white; font-weight: 700;">3.3%</div>
   </div>
 </div>
 
-<!-- vue script setup scripts can be directly used in markdown, and will only affects current page -->
-<script setup lang="ts">
-const final = {
-  x: 0,
-  y: 0,
-  rotate: 0,
-  scale: 1,
-  transition: {
-    type: 'spring',
-    damping: 10,
-    stiffness: 20,
-    mass: 2
-  }
-}
-</script>
-
-<div
-  v-motion
-  :initial="{ x:35, y: 30, opacity: 0}"
-  :enter="{ y: 0, opacity: 1, transition: { delay: 3500 } }">
-
-[Learn more](https://sli.dev/guide/animations.html#motion)
-
-</div>
-
----
-
-# $\LaTeX$
-
-$\LaTeX$ is supported out-of-box. Powered by [$\KaTeX$](https://katex.org/).
-
-<div h-3 />
-
-Inline $\sqrt{3x-1}+(1+x)^2$
-
-Block
-$$ {1|3|all}
-\begin{aligned}
-\nabla \cdot \vec{E} &= \frac{\rho}{\varepsilon_0} \\
-\nabla \cdot \vec{B} &= 0 \\
-\nabla \times \vec{E} &= -\frac{\partial\vec{B}}{\partial t} \\
-\nabla \times \vec{B} &= \mu_0\vec{J} + \mu_0\varepsilon_0\frac{\partial\vec{E}}{\partial t}
-\end{aligned}
-$$
-
-[Learn more](https://sli.dev/features/latex)
-
----
-
-# Diagrams
-
-You can create diagrams / graphs from textual descriptions, directly in your Markdown.
-
-<div class="grid grid-cols-4 gap-5 pt-4 -mb-6">
-
-```mermaid {scale: 0.5, alt: 'A simple sequence diagram'}
-sequenceDiagram
-    Alice->John: Hello John, how are you?
-    Note over Alice,John: A typical interaction
-```
-
-```mermaid {theme: 'neutral', scale: 0.8}
-graph TD
-B[Text] --> C{Decision}
-C -->|One| D[Result 1]
-C -->|Two| E[Result 2]
-```
-
-```mermaid
-mindmap
-  root((mindmap))
-    Origins
-      Long history
-      ::icon(fa fa-book)
-      Popularisation
-        British popular psychology author Tony Buzan
-    Research
-      On effectiveness<br/>and features
-      On Automatic creation
-        Uses
-            Creative techniques
-            Strategic planning
-            Argument mapping
-    Tools
-      Pen and paper
-      Mermaid
-```
-
-```plantuml {scale: 0.7}
-@startuml
-
-package "Some Group" {
-  HTTP - [First Component]
-  [Another Component]
-}
-
-node "Other Groups" {
-  FTP - [Second Component]
-  [First Component] --> FTP
-}
-
-cloud {
-  [Example 1]
-}
-
-database "MySql" {
-  folder "This is my folder" {
-    [Folder 3]
-  }
-  frame "Foo" {
-    [Frame 4]
-  }
-}
-
-[Another Component] --> [Example 1]
-[Example 1] --> [Folder 3]
-[Folder 3] --> [Frame 4]
-
-@enduml
-```
-
-</div>
-
-Learn more: [Mermaid Diagrams](https://sli.dev/features/mermaid) and [PlantUML Diagrams](https://sli.dev/features/plantuml)
-
----
-foo: bar
-dragPos:
-  square: 691,32,167,_,-16
----
-
-# Draggable Elements
-
-Double-click on the draggable elements to edit their positions.
-
-<br>
-
-###### Directive Usage
-
-```md
-<img v-drag="'square'" src="https://sli.dev/logo.png">
-```
-
-<br>
-
-###### Component Usage
-
-```md
-<v-drag text-3xl>
-  <div class="i-carbon:arrow-up" />
-  Use the `v-drag` component to have a draggable container!
-</v-drag>
-```
-
-<v-drag pos="663,206,261,_,-15">
-  <div text-center text-3xl border border-main rounded>
-    Double-click me!
+<div style="display: flex; align-items: center; margin-bottom: 6px;">
+  <div style="width: 150px;" class="text-sm">DeepSeek-V3.2-Exp</div>
+  <div style="flex: 1; background: #e0e0e0; height: 20px; border-radius: 2px;">
+    <div style="width: 40.8%; background: #2196f3; height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: white; font-weight: 700;">5.3%</div>
   </div>
-</v-drag>
+</div>
 
-<img v-drag="'square'" src="https://sli.dev/logo.png">
+<div style="display: flex; align-items: center; margin-bottom: 6px;">
+  <div style="width: 150px;" class="text-sm">DeepSeek-V3.1</div>
+  <div style="flex: 1; background: #e0e0e0; height: 20px; border-radius: 2px;">
+    <div style="width: 42.3%; background: #2196f3; height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: white; font-weight: 700;">5.5%</div>
+  </div>
+</div>
 
-###### Draggable Arrow
+<div style="display: flex; align-items: center; margin-bottom: 6px;">
+  <div style="width: 150px;" class="text-sm">GPT-4.1</div>
+  <div style="flex: 1; background: #e0e0e0; height: 20px; border-radius: 2px;">
+    <div style="width: 43.1%; background: #9c27b0; height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: white; font-weight: 700;">5.6%</div>
+  </div>
+</div>
 
-```md
-<v-drag-arrow two-way />
-```
+<div style="display: flex; align-items: center; margin-bottom: 6px;">
+  <div style="width: 150px;" class="text-sm">DeepSeek-V3</div>
+  <div style="flex: 1; background: #e0e0e0; height: 20px; border-radius: 2px;">
+    <div style="width: 47.0%; background: #2196f3; height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: white; font-weight: 700;">6.1%</div>
+  </div>
+</div>
 
-<v-drag-arrow pos="67,452,253,46" two-way op70 />
+<div style="display: flex; align-items: center; margin-bottom: 6px;">
+  <div style="width: 150px;" class="text-sm">Gemini-2.5-Pro</div>
+  <div style="flex: 1; background: #e0e0e0; height: 20px; border-radius: 2px;">
+    <div style="width: 53.8%; background: #4caf50; height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: white; font-weight: 700;">7.0%</div>
+  </div>
+</div>
 
----
-src: ./pages/imported-slides.md
-hide: false
----
+<div style="display: flex; align-items: center; margin-bottom: 6px;">
+  <div style="width: 150px;" class="text-sm">Gemini-2.5-Flash</div>
+  <div style="flex: 1; background: #e0e0e0; height: 20px; border-radius: 2px;">
+    <div style="width: 60.0%; background: #4caf50; height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: white; font-weight: 700;">7.8%</div>
+  </div>
+</div>
 
----
+<div style="display: flex; align-items: center; margin-bottom: 6px;">
+  <div style="width: 150px;" class="text-sm">GPT-4o</div>
+  <div style="flex: 1; background: #e0e0e0; height: 20px; border-radius: 2px;">
+    <div style="width: 73.8%; background: #9c27b0; height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: white; font-weight: 700;">9.6%</div>
+  </div>
+</div>
 
-# Monaco Editor
+<div style="display: flex; align-items: center; margin-bottom: 6px;">
+  <div style="width: 150px;" class="text-sm">Claude-Haiku-4.5</div>
+  <div style="flex: 1; background: #e0e0e0; height: 20px; border-radius: 2px;">
+    <div style="width: 75.4%; background: #ff9800; height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: white; font-weight: 700;">9.8%</div>
+  </div>
+</div>
 
-Slidev provides built-in Monaco Editor support.
+<div style="display: flex; align-items: center; margin-bottom: 6px;">
+  <div style="width: 150px;" class="text-sm">Claude-Sonnet-4</div>
+  <div style="flex: 1; background: #e0e0e0; height: 20px; border-radius: 2px;">
+    <div style="width: 79.2%; background: #ff9800; height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: white; font-weight: 700;">10.3%</div>
+  </div>
+</div>
 
-Add `{monaco}` to the code block to turn it into an editor:
+<div style="display: flex; align-items: center; margin-bottom: 6px;">
+  <div style="width: 150px;" class="text-sm">GPT-5-Nano</div>
+  <div style="flex: 1; background: #e0e0e0; height: 20px; border-radius: 2px;">
+    <div style="width: 80.8%; background: #9c27b0; height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: white; font-weight: 700;">10.5%</div>
+  </div>
+</div>
 
-```ts {monaco}
-import { ref } from 'vue'
-import { emptyArray } from './external'
+<div style="display: flex; align-items: center; margin-bottom: 6px;">
+  <div style="width: 150px;" class="text-sm">Claude-Opus-4.5</div>
+  <div style="flex: 1; background: #e0e0e0; height: 20px; border-radius: 2px;">
+    <div style="width: 83.8%; background: #ff9800; height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: white; font-weight: 700;">10.9%</div>
+  </div>
+</div>
 
-const arr = ref(emptyArray(10))
-```
+<div style="display: flex; align-items: center; margin-bottom: 6px;">
+  <div style="width: 150px;" class="text-sm">GPT-5.1-Low</div>
+  <div style="flex: 1; background: #e0e0e0; height: 20px; border-radius: 2px;">
+    <div style="width: 83.8%; background: #9c27b0; height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: white; font-weight: 700;">10.9%</div>
+  </div>
+</div>
 
-Use `{monaco-run}` to create an editor that can execute the code directly in the slide:
+<div style="display: flex; align-items: center; margin-bottom: 6px;">
+  <div style="width: 150px;" class="text-sm">DeepSeek-R1</div>
+  <div style="flex: 1; background: #e0e0e0; height: 20px; border-radius: 2px;">
+    <div style="width: 87.0%; background: #2196f3; height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: white; font-weight: 700;">11.3%</div>
+  </div>
+</div>
 
-```ts {monaco-run}
-import { version } from 'vue'
-import { emptyArray, sayHello } from './external'
+<div style="display: flex; align-items: center; margin-bottom: 6px;">
+  <div style="width: 150px;" class="text-sm">GPT-5.1-High</div>
+  <div style="flex: 1; background: #e0e0e0; height: 20px; border-radius: 2px;">
+    <div style="width: 93.1%; background: #9c27b0; height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: white; font-weight: 700;">12.1%</div>
+  </div>
+</div>
 
-sayHello()
-console.log(`vue ${version}`)
-console.log(emptyArray<number>(10).reduce(fib => [...fib, fib.at(-1)! + fib.at(-2)!], [1, 1]))
-```
+<div style="display: flex; align-items: center; margin-bottom: 6px;">
+  <div style="width: 150px;" class="text-sm">GPT-5-Mini</div>
+  <div style="flex: 1; background: #e0e0e0; height: 20px; border-radius: 2px;">
+    <div style="width: 99.2%; background: #9c27b0; height: 100%; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; color: white; font-weight: 700;">12.9%</div>
+  </div>
+</div>
+
+</div>
 
 ---
 layout: center
 class: text-center
 ---
 
-# Learn More
+# ¿Por qué no basta con Prompt Engineering?
 
-[Documentation](https://sli.dev) · [GitHub](https://github.com/slidevjs/slidev) · [Showcases](https://sli.dev/resources/showcases)
+---
+layout: image-right
+image: ./images/prompt_injection_meme.png
+backgroundSize: 45em 80%
+---
 
-<PoweredBySlidev mt-10 />
+# 🔓 OWASP LLM01:2025
+## Prompt Injection
+
+<blockquote cite="https://genai.owasp.org/llmrisk/llm01-prompt-injection/" class="mt-6">
+  Prompt Injection vulnerabilities exist in how models process prompts, and how input may force the model to incorrectly pass prompt data to other parts of the model, potentially causing them to violate guidelines, generate harmful content, enable unauthorized access, or influence critical decisions. While techniques like Retrieval Augmented Generation (RAG) and fine-tuning aim to make LLM outputs more relevant and accurate, research shows that they do not fully mitigate prompt injection vulnerabilities.
+</blockquote>
+
+<blockquote cite="https://genai.owasp.org/llmrisk/llm01-prompt-injection/" class="mt-6">
+  Prompt injection vulnerabilities are possible due to the nature of generative AI. Given the stochastic influence at the heart of the way models work, it is unclear if there are fool-proof methods of prevention for prompt injection
+</blockquote>
+
+---
+
+# ¿Qué son los Guardrails?
+
+<div>
+
+Capas de **validación, filtrado y control** alrededor del LLM.
+
+- ✅ **Validar** entradas antes del procesamiento
+- ✅ **Filtrar** salidas antes de entregarlas al usuario
+- ✅ **Detectar** contenido problemático
+- ✅ **Redactar** información sensible (PII)
+- ✅ **Verificar** adherencia a políticas
+- ✅ **Monitorear** comportamiento en producción
+
+</div>
+
+<v-click>
+
+<div class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded">
+💡 No confiar en UNA sola capa de defensa
+</div>
+
+</v-click>
+
+---
+
+# Arquitectura de LLM con Guardrails
+
+<div class='grid gap-12 mt-12'>
+<v-click>
+<div>
+
+## Sin Guardrails
+
+```mermaid
+graph LR
+    A[Input] --> B
+
+    subgraph System["LLM Application"]
+        B[Prompt] --> C[LLM]
+        C --> D[Output]
+    end
+
+    D --> E[Output]
+
+    style A fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000
+    style B fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px,color:#000
+    style C fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px,color:#000
+    style D fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px,color:#000
+    style E fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000
+    style System stroke:#999,stroke-width:2px
+```
+
+</div>
+</v-click>
+
+<v-click>
+<div>
+
+## Con Guardrails
+
+```mermaid
+graph LR
+    A[Input] --> IG[Input Guard]
+    
+    subgraph ModeratedSystem["Moderated LLM Application"]
+        IG --> B
+
+        subgraph System["LLM Application"]
+            B[Prompt] --> C[LLM]
+            C --> D[Output]
+        end
+
+        D --> OG[Output Guard]
+    end
+    OG --> E[Output]
+
+    style A fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000
+    style IG fill:#c8e6c9,stroke:#388e3c,stroke-width:3px,color:#000
+    style B fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px,color:#000
+    style C fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px,color:#000
+    style D fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px,color:#000
+    style OG fill:#c8e6c9,stroke:#388e3c,stroke-width:3px,color:#000
+    style E fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000
+    style System stroke:#999,stroke-width:2px,stroke-dasharray: 5 5
+    style ModeratedSystem stroke:#999,stroke-width:2px
+```
+
+</div>
+</v-click>
+</div>
+
+---
+
+# Layers
+
+<div class="grid grid-cols-2 gap-4">
+<div>
+
+## 1️⃣ Input Layer
+
+<div class="text-sm">
+
+- **Sanitización** de caracteres especiales
+- **Detección de PII** (datos personales)
+- **Anti-injection patterns**
+- **Topic validation** (temas prohibidos)
+- **Rate limiting** por usuario
+
+</div>
+</div>
+
+<div>
+<v-click>
+
+## 2️⃣ Processing Layer
+
+<div class="text-sm">
+
+- **Context management** (límites de ventana)
+- **Policy enforcement** (reglas de negocio)
+- **Token budgets** (límites de costo)
+- **Retrieval filtering** (en RAG)
+
+</div>
+</v-click>
+</div>
+
+
+<div>
+<v-click>
+
+## 3️⃣ Output Layer
+
+<div class="text-sm">
+
+- **Hallucination detection**
+- **PII redaction** (eliminar datos sensibles)
+- **Bias detection** (fairness)
+- **Completeness checks**
+
+</div>
+</v-click>
+</div>
+
+<div>
+<v-click>
+
+## 4️⃣ Monitoring Layer
+
+<div class="text-sm">
+
+- **Audit logging** (trazabilidad)
+- **Anomaly detection** (patrones sospechosos)
+- **Performance metrics**
+- **Cost tracking**
+- **Human-in-the-loop** para casos edge
+
+</div>
+</v-click>
+</div>
+
+</div>
+
+---
+
+# OpenAI: Moderation API
+
+<div class="grid grid-cols-2 gap-8">
+
+<div>
+
+## Características (2024 Update)
+
+- **Basada en GPT-4o**
+- **Multimodal**: Texto + Imágenes
+- **Gratuita** para todos los desarrolladores
+- **Multilingüe** (mejor precisión en no-inglés)
+- **Scores calibrados** de probabilidad
+
+<div class="text-xs mt-4 opacity-60">
+📖 Docs oficiales:<br/>
+platform.openai.com/docs/guides/moderation
+</div>
+
+</div>
+
+<div>
+
+## Categorías de Contenido
+
+<div class="text-sm">
+
+### Hate Speech
+- `hate`: Discriminación por raza, género, religión, etc.
+- `hate/threatening`: Hate + amenazas de violencia
+
+### Harassment
+- `harassment`: Promoción de acoso
+- `harassment/threatening`: Acoso + amenazas
+
+### Self-Harm
+- `self-harm`: Promoción de autolesión
+- `self-harm/intent`: Intención declarada
+- `self-harm/instructions`: Guías de autolesión
+
+</div>
+
+</div>
+
+</div>
+
+---
+
+# Google Gemini: Safety Settings
+
+<div class="grid grid-cols-2 gap-8">
+
+<div>
+
+## Harm Categories
+
+4 categorías principales:
+
+<div class="text-sm">
+
+1. **Harassment** - Comentarios dañinos sobre identidad
+2. **Hate Speech** - Contenido grosero/irrespetuoso
+3. **Sexually Explicit** - Material sexual/lascivo
+4. **Dangerous Content** - Promoción de actos dañinos
+
+</div>
+
+<div class="text-xs mt-4 opacity-60">
+📖 Docs oficiales:<br/>
+ai.google.dev/gemini-api/docs/safety-settings
+</div>
+
+<v-click>
+
+<div class="text-sm mt-4">
+
+### Niveles de Probabilidad
+
+- **HIGH** - Alta probabilidad de no seguro
+- **MEDIUM** - Probabilidad media
+- **LOW** - Probabilidad baja
+- **NEGLIGIBLE** - Probabilidad insignificante
+
+⚠️ Se bloquea por **probabilidad**, no severidad
+
+</div>
+
+</v-click>
+
+</div>
+
+<div>
+
+<v-click>
+
+## Blocking Thresholds
+
+<div class="text-sm">
+
+5 niveles de configuración:
+
+```python {text:xs}
+BLOCK_NONE           # Permitir todo
+BLOCK_ONLY_HIGH      # Solo alta probabilidad
+BLOCK_MEDIUM_AND_ABOVE  # Media + alta
+BLOCK_LOW_AND_ABOVE  # Baja + media + alta
+OFF                  # Deshabilitado
+```
+
+</div>
+
+</v-click>
+
+<v-click>
+
+<div class="text-sm mt-4">
+
+## Severity Scores
+
+- **Rango**: 0.0 → 1.0
+- **Discretizado**: NEGLIGIBLE, LOW, MEDIUM, HIGH
+- Refleja **magnitud del daño potencial**
+
+</div>
+
+</v-click>
+
+<v-click>
+
+<div class="text-sm mt-4">
+
+### Protecciones Fijas
+
+🔒 **Child safety** siempre bloqueado (no configurable)
+
+</div>
+
+</v-click>
+
+</div>
+
+</div>
+
+---
+
+# Google Gemini: Configuración en Código
+
+```python {text:xs}
+import google.generativeai as genai
+
+safety_settings = [
+    {
+        "category": "HARM_CATEGORY_HARASSMENT",
+        "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+    },
+    {
+        "category": "HARM_CATEGORY_HATE_SPEECH",
+        "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+    },
+    {
+        "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+        "threshold": "BLOCK_LOW_AND_ABOVE"  # Más restrictivo
+    },
+    {
+        "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+        "threshold": "BLOCK_ONLY_HIGH"  # Menos restrictivo
+    }
+]
+
+model = genai.GenerativeModel('gemini-pro')
+response = model.generate_content(
+    "Tu prompt aquí",
+    safety_settings=safety_settings
+)
+
+# Verificar si fue bloqueado
+if response.prompt_feedback.block_reason:
+    print(f"Bloqueado: {response.prompt_feedback.block_reason}")
+```
+
+<div class="text-xs mt-4 opacity-60">
+💡 Ajustable por request vía API o Google AI Studio
+</div>
+
+---
+
+# Anthropic Claude: Constitutional AI
+
+<div class="grid grid-cols-2 gap-8">
+
+<div>
+
+## Enfoque: Constitutional AI (CAI)
+
+Embedding de una **"constitución"** (principios) directamente en el entrenamiento:
+
+✅ **Menos dependiente** de human feedback
+✅ **Values-aligned** desde el training
+✅ **Resistente a jailbreaking** por diseño
+
+<v-click>
+
+<div class="text-sm mt-4">
+
+### Cinco Dimensiones de Harm
+
+1. **Physical** - Daño físico
+2. **Psychological** - Daño mental/emocional
+3. **Economic** - Daño financiero
+4. **Societal** - Daño social/comunitario
+5. **Individual Autonomy** - Restricción de libertad
+
+</div>
+
+</v-click>
+
+<div class="text-xs mt-4 opacity-60">
+📖 Docs oficiales:<br/>
+platform.claude.com/docs/test-and-evaluate/strengthen-guardrails
+</div>
+
+</div>
+
+<div>
+
+<v-click>
+
+## Resistencia a Jailbreaking
+
+**Claude es significativamente más resistente** que otros LLMs:
+
+- Defendido contra **miles de horas** de red teaming
+- Constitutional AI proporciona resiliencia core
+- Menor tasa de bypass exitoso
+
+</v-click>
+
+</div>
+
+</div>
+
+---
+
+# Anthropic Claude: Estrategias Adicionales
+
+<div class="grid grid-cols-2 gap-8">
+
+<div>
+
+## Estrategias Recomendadas
+
+<div class="text-sm">
+
+1. **Harmlessness Screening** (Claude Haiku para pre-filtrado)
+2. **Input Validation** (patrones de jailbreak)
+3. **Prompt Engineering** (énfasis en ética/compliance)
+4. **User Behavior Monitoring** (patrones de abuso)
+5. **Continuous Monitoring** (análisis de outputs)
+6. **Layered Approach** (múltiples safeguards)
+
+</div>
+
+</div>
+
+<div>
+
+## Equipo de Safeguards
+
+<div class="text-sm">
+
+**Policy Development**
+- Usage Policy framework
+- Policy Vulnerability Testing
+
+**Real-Time Enforcement**
+- AI-powered classifiers
+- Response steering
+- Account-level enforcement
+
+**Ongoing Monitoring**
+- Hierarchical summarization
+- Public threat intelligence sharing
+
+</div>
+
+<div class="text-xs mt-4 opacity-60">
+📄 anthropic.com/news/building-safeguards-for-claude
+</div>
+
+</div>
+
+</div>
+
+---
+
+# Key Takeaways
+
+## 🎯 Conceptos Clave
+
+1. **Los LLMs alucinan** - es inherente a la arquitectura
+   - Tasas mejoraron 96% (2021→2025)
+   - Varían por dominio (0.7% general vs 76% finanzas)
+
+2. **Prompts no bastan** - necesitamos guardrails
+   - Prompt injection = riesgo #1 (OWASP)
+   - No existe solución definitiva
+
+3. **Defense in Depth** - múltiples capas
+   - Input, Processing, Output, Monitoring
+
+4. **Safety mechanisms de vendors** - usar + extender
+   - OpenAI: Moderation API (gratis, multimodal)
+   - Gemini: Safety Settings (configurable)
+   - Claude: Constitutional AI (jailbreak-resistant)
+
+---
+
+# Casos Legales y de Seguridad
+
+<div class="grid grid-cols-2 gap-8 text-xs">
+
+<div>
+
+## Casos Legales
+
+**Moffatt v. Air Canada (2024 BCCRT 149)**
+- Chatbot dio información incorrecta
+- Empresa responsable legalmente
+- Daños: $812.02 CAD
+- Precedente: "chatbot no es entidad legal separada"
+
+**Steven Schwartz (New York)**
+- Citó 6 casos falsos de ChatGPT
+- Multa: $5,000
+- Impacto en responsabilidad profesional
+
+**Michael Cohen**
+- 3 casos inventados por Google Bard
+- Casos completamente fabricados
+- Consecuencias legales
+
+</div>
+
+<div>
+
+## Incidentes de Seguridad (2024-2025)
+
+**Flowise CVE-2024-31621**
+- 438 servidores LLM comprometidos
+- Leak de datos sensibles
+
+**Samsung ChatGPT Leak**
+- Código fuente de semiconductores
+- Información confidencial
+
+**LLM Hijacking Attacks**
+- Costos hasta $100,000/día
+- Unit 42 (Palo Alto Networks) research
+
+**OmniGPT Breach (Feb 2025)**
+- 30,000+ usuarios afectados
+- API keys, billing data expuestos
+- Personal info leaked
+
+</div>
+
+</div>
+
+---
+layout: center
+class: text-center
+---
+
+# Gracias!
