@@ -370,105 +370,79 @@ graph LR
 </div>
 
 ---
+layout: image
+image: ./images/chapulin.png
+backgroundSize: 20em 50%
+---
+
+---
+layout: two-cols-header
+class: text-sm
+---
 
 # OpenAI: Moderation API
 
-<div class="grid grid-cols-2 gap-8">
+::left::
 
-<div>
+```json
+{
+  "id": "modr-970d409ef3bef3b70c73d8232df86e7d",
+  "model": "omni-moderation-latest",
+  "results": [
+    {
+      "flagged": true,
+      "categories": {
+        "sexual": false,
+        "hate": false,
+        "violence": true,
+      },
+      "category_scores": {
+        "sexual": 2.34135824776394e-7,
+        "hate": 3.1999824407395835e-7,
+        "violence": 0.8599265510337075,
+      },
+      "category_applied_input_types": {
+        "sexual": ["image"],
+        "hate": [],
+        "violence": ["image"],
+      }
+    }
+  ]
+}
+```
 
-## Características (2024 Update)
+::right::
 
-- **Basada en GPT-4o**
-- **Multimodal**: Texto + Imágenes
-- **Gratuita** para todos los desarrolladores
-- **Multilingüe** (mejor precisión en no-inglés)
-- **Scores calibrados** de probabilidad
+<div class="ml-12">
 
-<div class="text-xs mt-4 opacity-60">
-📖 Docs oficiales:<br/>
-platform.openai.com/docs/guides/moderation
+### Categorías
+
+- sexual
+- sexual/minors
+- harassment
+- harassment/threatening
+- hate
+- hate/threatening
+- illicit
+- illicit/violent
+- self-harm
+- self-harm/intent
+- self-harm/instructions
+- violence
+- violence/graphic
+
 </div>
 
-</div>
 
-<div>
-
-## Categorías de Contenido
-
-<div class="text-sm">
-
-### Hate Speech
-- `hate`: Discriminación por raza, género, religión, etc.
-- `hate/threatening`: Hate + amenazas de violencia
-
-### Harassment
-- `harassment`: Promoción de acoso
-- `harassment/threatening`: Acoso + amenazas
-
-### Self-Harm
-- `self-harm`: Promoción de autolesión
-- `self-harm/intent`: Intención declarada
-- `self-harm/instructions`: Guías de autolesión
-
-</div>
-
-</div>
-
-</div>
-
+---
+layout: image-right
+image: ./images/gemini_safety_filters.png
+backgroundSize: 30em 70%
 ---
 
 # Google Gemini: Safety Settings
 
-<div class="grid grid-cols-2 gap-8">
-
-<div>
-
-## Harm Categories
-
-4 categorías principales:
-
-<div class="text-sm">
-
-1. **Harassment** - Comentarios dañinos sobre identidad
-2. **Hate Speech** - Contenido grosero/irrespetuoso
-3. **Sexually Explicit** - Material sexual/lascivo
-4. **Dangerous Content** - Promoción de actos dañinos
-
-</div>
-
-<div class="text-xs mt-4 opacity-60">
-📖 Docs oficiales:<br/>
-ai.google.dev/gemini-api/docs/safety-settings
-</div>
-
-<v-click>
-
-<div class="text-sm mt-4">
-
-### Niveles de Probabilidad
-
-- **HIGH** - Alta probabilidad de no seguro
-- **MEDIUM** - Probabilidad media
-- **LOW** - Probabilidad baja
-- **NEGLIGIBLE** - Probabilidad insignificante
-
-⚠️ Se bloquea por **probabilidad**, no severidad
-
-</div>
-
-</v-click>
-
-</div>
-
-<div>
-
-<v-click>
-
 ## Blocking Thresholds
-
-<div class="text-sm">
 
 5 niveles de configuración:
 
@@ -480,264 +454,106 @@ BLOCK_LOW_AND_ABOVE  # Baja + media + alta
 OFF                  # Deshabilitado
 ```
 
-</div>
+<style>
+  image {
+    margin-top: 50px;
+  }
+</style>
 
-</v-click>
-
-<v-click>
-
-<div class="text-sm mt-4">
-
-## Severity Scores
-
-- **Rango**: 0.0 → 1.0
-- **Discretizado**: NEGLIGIBLE, LOW, MEDIUM, HIGH
-- Refleja **magnitud del daño potencial**
-
-</div>
-
-</v-click>
-
-<v-click>
-
-<div class="text-sm mt-4">
-
-### Protecciones Fijas
-
-🔒 **Child safety** siempre bloqueado (no configurable)
-
-</div>
-
-</v-click>
-
-</div>
-
-</div>
 
 ---
 
-# Google Gemini: Configuración en Código
+# Google Gemini SDK
 
 ```python {text:xs}
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 
-safety_settings = [
-    {
-        "category": "HARM_CATEGORY_HARASSMENT",
-        "threshold": "BLOCK_MEDIUM_AND_ABOVE"
-    },
-    {
-        "category": "HARM_CATEGORY_HATE_SPEECH",
-        "threshold": "BLOCK_MEDIUM_AND_ABOVE"
-    },
-    {
-        "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-        "threshold": "BLOCK_LOW_AND_ABOVE"  # Más restrictivo
-    },
-    {
-        "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
-        "threshold": "BLOCK_ONLY_HIGH"  # Menos restrictivo
-    }
-]
+import PIL.Image
 
-model = genai.GenerativeModel('gemini-pro')
-response = model.generate_content(
-    "Tu prompt aquí",
-    safety_settings=safety_settings
+img = PIL.Image.open("cookies.jpg")
+
+client = genai.Client()
+
+response = client.models.generate_content(
+    model="gemini-2.0-flash",
+    contents=['Do these look store-bought or homemade?', img],
+    config=types.GenerateContentConfig(
+      safety_settings=[
+        types.SafetySetting(
+            category=types.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+            threshold=types.HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+        ),
+      ]
+    )
 )
 
-# Verificar si fue bloqueado
-if response.prompt_feedback.block_reason:
-    print(f"Bloqueado: {response.prompt_feedback.block_reason}")
+print(response.text)
 ```
 
-<div class="text-xs mt-4 opacity-60">
-💡 Ajustable por request vía API o Google AI Studio
-</div>
-
+---
+class: text-sm
 ---
 
 # Anthropic Claude: Constitutional AI
 
-<div class="grid grid-cols-2 gap-8">
+<blockquote cite="https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks" class="mb-6">
+Claude is far more resistant to jailbreaking than other major LLMs, thanks to advanced training methods like Constitutional AI.
+</blockquote>
 
+<div class="grid gap-6">
 <div>
 
-## Enfoque: Constitutional AI (CAI)
+### Basic hallucination minimization strategies
 
-Embedding de una **"constitución"** (principios) directamente en el entrenamiento:
-
-✅ **Menos dependiente** de human feedback
-✅ **Values-aligned** desde el training
-✅ **Resistente a jailbreaking** por diseño
-
-<v-click>
-
-<div class="text-sm mt-4">
-
-### Cinco Dimensiones de Harm
-
-1. **Physical** - Daño físico
-2. **Psychological** - Daño mental/emocional
-3. **Economic** - Daño financiero
-4. **Societal** - Daño social/comunitario
-5. **Individual Autonomy** - Restricción de libertad
+- Allow Claude to say "I don't know"
+- Use direct quotes for factual grounding
+- Verify with citations
 
 </div>
-
-</v-click>
-
-<div class="text-xs mt-4 opacity-60">
-📖 Docs oficiales:<br/>
-platform.claude.com/docs/test-and-evaluate/strengthen-guardrails
-</div>
-
-</div>
-
 <div>
 
-<v-click>
+### Advanced techniques
 
-## Resistencia a Jailbreaking
-
-**Claude es significativamente más resistente** que otros LLMs:
-
-- Defendido contra **miles de horas** de red teaming
-- Constitutional AI proporciona resiliencia core
-- Menor tasa de bypass exitoso
-
-</v-click>
+- Chain-of-thought verification
+- Best-of-N verficiation
+- Iterative refinement
+- External knowledge restriction
 
 </div>
-
 </div>
+
+<!-- 
+Basic:
+- Allow Claude to say "I don't know": Explicitly give Claude permission to admit uncertainty. This simple technique can drastically reduce false information.
+- Use direct quotes for factual grounding: For tasks involving long documents (>20K tokens), ask Claude to extract word-for-word quotes first before performing its task. This grounds its responses in the actual text, reducing hallucinations.
+- Verify with citations: Make Claude's response auditable by having it cite quotes and sources for each of its claims. You can also have Claude verify each claim by finding a supporting quote after it generates a response. If it can't find a quote, it must retract the claim.
+
+Advanced:
+- Chain-of-thought verification: Ask Claude to explain its reasoning step-by-step before giving a final answer. This can reveal faulty logic or assumptions.
+- Best-of-N verficiation: Run Claude through the same prompt multiple times and compare the outputs. Inconsistencies across outputs could indicate hallucinations.
+- Iterative refinement: Use Claude's outputs as inputs for follow-up prompts, asking it to verify or expand on previous statements. This can catch and correct inconsistencies.
+- External knowledge restriction: Explicitly instruct Claude to only use information from provided documents and not its general knowledge.
+-->
+
 
 ---
-
-# Anthropic Claude: Estrategias Adicionales
-
-<div class="grid grid-cols-2 gap-8">
-
-<div>
-
-## Estrategias Recomendadas
-
-<div class="text-sm">
-
-1. **Harmlessness Screening** (Claude Haiku para pre-filtrado)
-2. **Input Validation** (patrones de jailbreak)
-3. **Prompt Engineering** (énfasis en ética/compliance)
-4. **User Behavior Monitoring** (patrones de abuso)
-5. **Continuous Monitoring** (análisis de outputs)
-6. **Layered Approach** (múltiples safeguards)
-
-</div>
-
-</div>
-
-<div>
-
-## Equipo de Safeguards
-
-<div class="text-sm">
-
-**Policy Development**
-- Usage Policy framework
-- Policy Vulnerability Testing
-
-**Real-Time Enforcement**
-- AI-powered classifiers
-- Response steering
-- Account-level enforcement
-
-**Ongoing Monitoring**
-- Hierarchical summarization
-- Public threat intelligence sharing
-
-</div>
-
-<div class="text-xs mt-4 opacity-60">
-📄 anthropic.com/news/building-safeguards-for-claude
-</div>
-
-</div>
-
-</div>
-
+layout: image
+image: ./images/guardrails_ai.png
+backgroundSize: 90%
 ---
 
-# Key Takeaways
-
-## 🎯 Conceptos Clave
-
-1. **Los LLMs alucinan** - es inherente a la arquitectura
-   - Tasas mejoraron 96% (2021→2025)
-   - Varían por dominio (0.7% general vs 76% finanzas)
-
-2. **Prompts no bastan** - necesitamos guardrails
-   - Prompt injection = riesgo #1 (OWASP)
-   - No existe solución definitiva
-
-3. **Defense in Depth** - múltiples capas
-   - Input, Processing, Output, Monitoring
-
-4. **Safety mechanisms de vendors** - usar + extender
-   - OpenAI: Moderation API (gratis, multimodal)
-   - Gemini: Safety Settings (configurable)
-   - Claude: Constitutional AI (jailbreak-resistant)
-
+---
+layout: image
+image: ./images/guardrails_hub.png
+backgroundSize: 90%
 ---
 
-# Casos Legales y de Seguridad
-
-<div class="grid grid-cols-2 gap-8 text-xs">
-
-<div>
-
-## Casos Legales
-
-**Moffatt v. Air Canada (2024 BCCRT 149)**
-- Chatbot dio información incorrecta
-- Empresa responsable legalmente
-- Daños: $812.02 CAD
-- Precedente: "chatbot no es entidad legal separada"
-
-**Steven Schwartz (New York)**
-- Citó 6 casos falsos de ChatGPT
-- Multa: $5,000
-- Impacto en responsabilidad profesional
-
-**Michael Cohen**
-- 3 casos inventados por Google Bard
-- Casos completamente fabricados
-- Consecuencias legales
-
-</div>
-
-<div>
-
-## Incidentes de Seguridad (2024-2025)
-
-**Flowise CVE-2024-31621**
-- 438 servidores LLM comprometidos
-- Leak de datos sensibles
-
-**Samsung ChatGPT Leak**
-- Código fuente de semiconductores
-- Información confidencial
-
-**LLM Hijacking Attacks**
-- Costos hasta $100,000/día
-- Unit 42 (Palo Alto Networks) research
-
-**OmniGPT Breach (Feb 2025)**
-- 30,000+ usuarios afectados
-- API keys, billing data expuestos
-- Personal info leaked
-
-</div>
-
-</div>
+---
+layout: image
+image: ./images/nvidia_nemo.png
+backgroundSize: 90%
+---
 
 ---
 layout: center
