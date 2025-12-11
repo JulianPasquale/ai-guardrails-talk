@@ -1,10 +1,7 @@
 ---
-theme: seriph
-background: ./images/background.png
+theme: default
 title: Como evitar que el LLM se vaya a la banquina
 class: text-center
-drawings:
-  persist: false
 transition: slide-left
 mdc: true
 duration: 20min
@@ -12,11 +9,19 @@ duration: 20min
 
 ## Como evitar que el LLM se vaya a la banquina
 
+Julian Pasquale
+
+---
+layout: image
+image: ./images/background.png
+backgroundSize: 50em 90%
+---
+
 ---
 
 # El Problema con los LLM
 
-<div class="grid gap-8">
+<div class="grid gap-6">
 
 <v-click>
 
@@ -32,9 +37,10 @@ response_3 = llm(prompt) # "La suma es cuatro"
 </v-click>
 <v-click>
 
-### Pueden generar información que no es correcta
+### No es confiable
 - Información desactualizada
 - Responder a preguntas que no queremos
+- Información erronea o contradictoria
 
 </v-click>
 </div>
@@ -188,6 +194,19 @@ class: text-center
 # ¿Por qué no basta con Prompt Engineering?
 
 ---
+layout: two-cols-header
+---
+
+# Google - Prototype to Production
+
+::left::
+
+<img src="./images/prototype_to_prod_1.png" width="400px">
+
+::right::
+<img src="./images/prototype_to_prod_2.png" width="400px">
+
+---
 layout: image-right
 image: ./images/prompt_injection_meme.png
 backgroundSize: 45em 80%
@@ -215,7 +234,7 @@ Capas de **validación, filtrado y control** alrededor del LLM.
 - ✅ **Validar** entradas antes del procesamiento
 - ✅ **Filtrar** salidas antes de entregarlas al usuario
 - ✅ **Detectar** contenido problemático
-- ✅ **Redactar** información sensible (PII)
+- ✅ **Ofuscar** información sensible (PII)
 - ✅ **Verificar** adherencia a políticas
 - ✅ **Monitorear** comportamiento en producción
 
@@ -554,6 +573,48 @@ layout: image
 image: ./images/nvidia_nemo.png
 backgroundSize: 90%
 ---
+
+---
+layout: image
+image: ./images/fudo_background.png
+backgroundSize: 70%
+class: text-center
+---
+
+# Un caso real
+
+---
+layout: image
+image: ./images/fudo_chatbot_announcement.png
+backgroundSize: 70%
+---
+
+---
+layout: image
+image: ./images/fudo_example_1.png
+backgroundSize: 60%
+class: text-center
+---
+
+# Ejemplo 1
+
+---
+layout: image
+image: ./images/fudo_example_2.png
+backgroundSize: 70%
+class: text-center
+---
+
+# Ejemplo 2
+
+---
+layout: image
+image: ./images/fudo_dashboard.png
+backgroundSize: 90%
+class: text-center
+---
+
+# Dashboard
 
 ---
 layout: center
