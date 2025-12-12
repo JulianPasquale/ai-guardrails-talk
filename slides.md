@@ -7,21 +7,102 @@ mdc: true
 duration: 20min
 ---
 
-## Como evitar que el LLM se vaya a la banquina
+<style scoped>
+.slidev-layout {
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-Julian Pasquale
+h1 {
+  color: rgba(255, 255, 255, 0.98);
+  text-shadow: 
+    0px 2px 8px rgba(0, 0, 0, 0.5),
+    0px 4px 16px rgba(0, 0, 0, 0.4);
+  margin: 0;
+  padding: 3rem 3rem 6rem 3rem;
+  backdrop-filter: blur(16px);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%);
+  font-size: 5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+p {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+img.main-background {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.bottom-image {
+  width: 100%;
+  height: 60%;
+  margin-top: -20px;
+  transform: translateY(-5rem);
+}
+</style>
+
+<img class="main-background" src="./images/background.png" />
+
+<h1> Como evitar que el LLM se vaya a la banquina </h1>
+
+<img class="bottom-image" src="./images/background.png" />
 
 ---
-layout: image
-image: ./images/background.png
-backgroundSize: 50em 90%
+class: text-center
 ---
 
+# Hola! 👋
+
+<div class="flex flex-col items-center mt-6 gap-6">
+
+<div>
+<img class="rounded-xl w-40 shadow-lg" src="./images/me.png" />
+</div>
+
+<div class="text-left">
+
+### Julian Pasquale
+
+- Software Engineer 👨🏾‍💻
+- AI Enthusiast ✨
+- Pero sobre todo <img class="w-5 shadow-lg inline-block align-middle" src="./images/ruby_logo.png" />
+
+</div>
+
+<div class="flex gap-4 items-center">
+<a href="https://github.com/julianpasquale" target="_blank" class="text-2xl">
+  <carbon:logo-github />
+</a>
+<a href="https://www.linkedin.com/in/julian-agustin-pasquale/" target="_blank" class="text-2xl">
+  <carbon:logo-linkedin />
+</a>
+<a href="https://x.com/juli_pasquale" target="_blank" class="text-2xl">
+  <carbon:logo-x />
+</a>
+</div>
+
+</div>
+
 ---
+
 
 # El Problema con los LLM
 
-<div class="grid gap-6">
+<div class="grid gap-4">
 
 <v-click>
 
@@ -35,12 +116,18 @@ response_2 = llm(prompt) # "2 + 2 = 4"
 response_3 = llm(prompt) # "La suma es cuatro"
 ```
 </v-click>
+
 <v-click>
 
-### No es confiable
-- Información desactualizada
-- Responder a preguntas que no queremos
-- Información erronea o contradictoria
+### Mecanismos existentes de testing no son suficientes
+
+</v-click>
+
+<v-click>
+
+### No son confiables
+- Información erronea o desactualizada
+- ChatGPT can make mistakes. Check important info.
 
 </v-click>
 </div>
@@ -252,7 +339,7 @@ Capas de **validación, filtrado y control** alrededor del LLM.
 
 # Arquitectura de LLM con Guardrails
 
-<div class='grid gap-12 mt-12'>
+<div class='grid gap-6 mt-12'>
 <v-click>
 <div>
 
@@ -466,11 +553,11 @@ backgroundSize: 30em 70%
 5 niveles de configuración:
 
 ```python {text:xs}
-BLOCK_NONE           # Permitir todo
-BLOCK_ONLY_HIGH      # Solo alta probabilidad
+BLOCK_NONE              # Permitir todo
+BLOCK_ONLY_HIGH         # Solo alta probabilidad
 BLOCK_MEDIUM_AND_ABOVE  # Media + alta
-BLOCK_LOW_AND_ABOVE  # Baja + media + alta
-OFF                  # Deshabilitado
+BLOCK_LOW_AND_ABOVE     # Baja + media + alta
+OFF                     # Deshabilitado
 ```
 
 <style>
