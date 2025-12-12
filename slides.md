@@ -55,11 +55,11 @@ img.main-background {
 }
 </style>
 
-<img class="main-background" src="./images/background.png" />
+<img class="main-background" src="/background.png" />
 
 <h1> Como evitar que el LLM se vaya a la banquina </h1>
 
-<img class="bottom-image" src="./images/background.png" />
+<img class="bottom-image" src="/background.png" />
 
 ---
 class: text-center
@@ -70,7 +70,7 @@ class: text-center
 <div class="flex flex-col items-center mt-6 gap-6">
 
 <div>
-<img class="rounded-xl w-40 shadow-lg" src="./images/me.png" />
+<img class="rounded-xl w-40 shadow-lg" src="/me.png" />
 </div>
 
 <div class="text-left">
@@ -79,7 +79,7 @@ class: text-center
 
 - Software Engineer 👨🏾‍💻
 - AI Enthusiast ✨
-- Pero sobre todo <img class="w-5 shadow-lg inline-block align-middle" src="./images/ruby_logo.png" />
+- Pero sobre todo <img class="w-5 shadow-lg inline-block align-middle" src="/ruby_logo.png" />
 
 </div>
 
@@ -134,7 +134,7 @@ response_3 = llm(prompt) # "La suma es cuatro"
 
 ---
 layout: image-right
-image: ./images/hallucination_meme.png
+image: /hallucination_meme.png
 backgroundSize: 20em 70%
 ---
 
@@ -288,14 +288,14 @@ layout: two-cols-header
 
 ::left::
 
-<img src="./images/prototype_to_prod_1.png" width="400px">
+<img src="/prototype_to_prod_1.png" width="400px">
 
 ::right::
-<img src="./images/prototype_to_prod_2.png" width="400px">
+<img src="/prototype_to_prod_2.png" width="400px">
 
 ---
 layout: image-right
-image: ./images/prompt_injection_meme.png
+image: /prompt_injection_meme.png
 backgroundSize: 45em 80%
 ---
 
@@ -477,7 +477,7 @@ graph LR
 
 ---
 layout: image
-image: ./images/chapulin.png
+image: /chapulin.png
 backgroundSize: 20em 50%
 ---
 
@@ -542,7 +542,7 @@ class: text-sm
 
 ---
 layout: image-right
-image: ./images/gemini_safety_filters.png
+image: /gemini_safety_filters.png
 backgroundSize: 30em 70%
 ---
 
@@ -641,29 +641,27 @@ Advanced:
 - Iterative refinement: Use Claude's outputs as inputs for follow-up prompts, asking it to verify or expand on previous statements. This can catch and correct inconsistencies.
 - External knowledge restriction: Explicitly instruct Claude to only use information from provided documents and not its general knowledge.
 -->
-
-
 ---
 layout: image
-image: ./images/guardrails_ai.png
+image: /guardrails_ai.png
 backgroundSize: 90%
 ---
 
 ---
 layout: image
-image: ./images/guardrails_hub.png
+image: /guardrails_hub.png
 backgroundSize: 90%
 ---
 
 ---
 layout: image
-image: ./images/nvidia_nemo.png
+image: /nvidia_nemo.png
 backgroundSize: 90%
 ---
 
 ---
 layout: image
-image: ./images/fudo_background.png
+image: /fudo_background.png
 backgroundSize: 70%
 class: text-center
 ---
@@ -672,14 +670,14 @@ class: text-center
 
 ---
 layout: image
-image: ./images/fudo_chatbot_announcement.png
+image: /fudo_chatbot_announcement.png
 backgroundSize: 70%
 ---
 
 ---
 layout: image
-image: ./images/fudo_example_1.png
-backgroundSize: 60%
+image: /fudo_example_1.png
+backgroundSize: 65%
 class: text-center
 ---
 
@@ -687,7 +685,7 @@ class: text-center
 
 ---
 layout: image
-image: ./images/fudo_example_2.png
+image: /fudo_example_2.png
 backgroundSize: 70%
 class: text-center
 ---
@@ -696,7 +694,7 @@ class: text-center
 
 ---
 layout: image
-image: ./images/fudo_dashboard.png
+image: /fudo_dashboard.png
 backgroundSize: 90%
 class: text-center
 ---
